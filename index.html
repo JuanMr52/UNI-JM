@@ -1,0 +1,197 @@
+<!DOCTYPE html>
+<html lang="es"><head><meta charset="utf-8"><title>MEDTRACK · Centro de Control Académico</title>
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<style>
+:root{--w:#6D142B;--wd:#45101F;--wi:#8A2440;--bg:#F7F5F4;--card:#fff;--tx:#242126;--t2:#77717A;--bd:#E7E1E3;--ok:#23845B;--am:#B7791F;--er:#C43D4B;--soft:#f3e9ec;color-scheme:light;box-sizing:border-box;padding-top:env(safe-area-inset-top,0px);padding-bottom:env(safe-area-inset-bottom,0px)}
+@media(prefers-color-scheme:dark){:root:not([data-theme=light]){--bg:#17131a;--card:#221c25;--tx:#f1ecee;--t2:#a59ea8;--bd:#3a323d;--soft:#33202a;--w:#c4506b;--wi:#d9708a;color-scheme:dark}}
+html,body{margin:0;height:100%}
+body{background:var(--bg);color:var(--tx);font:15px/1.5 Inter,Geist,system-ui,-apple-system,Segoe UI,sans-serif}
+*{box-sizing:border-box}h1,h2,h3{margin:0;line-height:1.2}h2{font-size:22px}h3{font-size:16px}
+button,input,select,textarea{font:inherit;color:inherit}
+:focus-visible{outline:2px solid var(--wi);outline-offset:2px}
+.app{display:flex;min-height:100%}
+nav{width:218px;background:var(--wd);color:#fff;padding:18px 12px;position:sticky;top:0;height:100vh;overflow:auto;flex:none}
+nav .logo{font-weight:800;letter-spacing:.04em;font-size:18px;padding:0 10px}nav small{display:block;padding:0 10px 14px;opacity:.7;font-size:12px}
+nav a{display:flex;gap:10px;align-items:center;color:#e9d9de;text-decoration:none;padding:8px 10px;border-radius:8px;font-size:14px}
+nav a:hover{background:rgba(255,255,255,.08)}nav a.on{background:var(--wi);color:#fff}
+svg.i{width:17px;height:17px;stroke:currentColor;fill:none;stroke-width:2;stroke-linecap:round;stroke-linejoin:round;flex:none}
+main{flex:1;padding:24px;max-width:1100px;min-width:0}
+.card{background:var(--card);border:1px solid var(--bd);border-radius:10px;padding:16px;margin-bottom:14px}
+.grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(170px,1fr));gap:12px;margin-bottom:14px}
+.kpi b{display:block;font-size:26px;font-variant-numeric:tabular-nums}.kpi span,.mut{color:var(--t2);font-size:13px}
+.btn{background:var(--w);color:#fff;border:0;border-radius:8px;padding:8px 14px;cursor:pointer;transition:background .15s}.btn:hover{background:var(--wi)}
+.btn.g{background:transparent;color:var(--tx);border:1px solid var(--bd)}.btn.g:hover{background:var(--soft)}.btn.s{padding:4px 9px;font-size:13px}
+.row{display:flex;gap:8px;flex-wrap:wrap;align-items:center;margin:10px 0}.sp{justify-content:space-between}
+.tag{display:inline-block;padding:2px 9px;border-radius:99px;font-size:12px;font-weight:600;border:1px solid currentColor}
+.ok{color:var(--ok)}.am{color:var(--am)}.er{color:var(--er)}.nt{color:var(--t2)}
+table{width:100%;border-collapse:collapse}th,td{text-align:left;padding:7px 8px;border-bottom:1px solid var(--bd);font-size:14px}th{color:var(--t2);font-weight:600;font-size:13px}
+.sc{overflow-x:auto}
+input,select,textarea{background:var(--card);border:1px solid var(--bd);border-radius:7px;padding:7px 9px;width:100%}
+label{display:block;font-size:13px;color:var(--t2);margin-bottom:10px}label.err input,label.err select{border-color:var(--er)}.em{color:var(--er);font-size:12px}
+.mod{position:fixed;inset:0;background:rgba(20,10,15,.55);display:flex;align-items:center;justify-content:center;padding:14px;z-index:9}
+.mod>form,.mod>div{background:var(--card);border-radius:12px;padding:20px;width:min(520px,100%);max-height:90vh;overflow:auto}
+.bar{height:8px;background:var(--bd);border-radius:9px;overflow:hidden}.bar i{display:block;height:100%;background:var(--w)}
+.tabs{display:flex;gap:4px;border-bottom:1px solid var(--bd);margin-bottom:14px;overflow-x:auto}.tabs button{background:none;border:0;padding:8px 12px;cursor:pointer;color:var(--t2);border-bottom:2px solid transparent}.tabs button.on{color:var(--w);border-color:var(--w);font-weight:600}
+.sim{border:1px dashed var(--wi);background:var(--soft)}
+.cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px}.cal div{min-height:62px;border:1px solid var(--bd);border-radius:6px;padding:3px;font-size:11px;overflow:hidden}.cal .hd{min-height:0;border:0;color:var(--t2);text-align:center}
+.cal span{display:block;background:var(--soft);border-radius:3px;margin-top:2px;padding:0 3px;white-space:nowrap;overflow:hidden;text-overflow:ellipsis}
+.wel{min-height:100vh;display:flex;flex-direction:column;justify-content:center;padding:8vw;background:linear-gradient(135deg,var(--wd),var(--w));color:#fff;animation:f .7s ease both}
+.wel h1{font-size:clamp(34px,6vw,58px)}.wel p{max-width:46ch;opacity:.9}.wel .btn{background:#fff;color:var(--wd);font-weight:600}.wel .btn.g{background:transparent;color:#fff;border-color:#ffffff88}
+@keyframes f{from{opacity:0;transform:translateY(12px)}}
+@media(prefers-reduced-motion:reduce){.wel{animation:none}}
+@media(max-width:760px){.app{flex-direction:column}nav{width:100%;height:auto;position:sticky;z-index:5;display:flex;overflow-x:auto;padding:8px}nav .logo,nav small{display:none}nav a{white-space:nowrap}main{padding:14px}}
+@media print{nav,.btn{display:none}}
+</style></head><body><div id="root"></div>
+<script>
+const K='medtrack_v1',today=()=>new Date().toISOString().slice(0,10),uid=()=>Math.random().toString(36).slice(2,9);
+const D={welcomed:false,sem:null,sems:[],subs:[],evals:[],logs:[],events:[],tasks:[],topics:[],cfg:{avg:'credits',hours:3}};
+let S;try{S=Object.assign({},D,JSON.parse(localStorage.getItem(K)||'{}'))}catch(e){S={...D}}
+const save=()=>{try{localStorage.setItem(K,JSON.stringify(S))}catch(e){}};
+const esc=s=>String(s??'').replace(/[&<>"]/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;'}[c]));
+const f1=n=>n==null?'—':(Math.round(n*100)/100).toString();
+const P={home:'M3 11l9-8 9 8v10H3z',cal:'M4 5h16v16H4zM4 10h16M9 3v4M15 3v4',book:'M4 4h12a4 4 0 014 4v12H8a4 4 0 01-4-4z',pen:'M4 20h4L20 8l-4-4L4 16z',chk:'M4 12l5 5L20 6',chart:'M4 20V4M4 20h16M8 16v-5M13 16V8M18 16v-3',arch:'M3 4h18v4H3zM5 8v12h14V8M10 13h4',bot:'M5 8h14v10H5zM12 4v4M9 13h.01M15 13h.01',gear:'M12 8a4 4 0 100 8 4 4 0 000-8zM12 2v3M12 19v3M2 12h3M19 12h3',lay:'M12 3l9 5-9 5-9-5zM3 13l9 5 9-5',list:'M8 6h13M8 12h13M8 18h13M3 6h.01M3 12h.01M3 18h.01'};
+const ic=n=>`<svg class="i" viewBox="0 0 24 24"><path d="${P[n]}"/></svg>`;
+
+/* ===== MOTOR DE CÁLCULO (independiente de la interfaz) ===== */
+function calc(sub,evals,sim){ // sim: promedio hipotético (0-1) para pendientes, o null
+  const S_=+sub.scale||100,min=+sub.min||0,goal=+sub.goal||null;
+  const inc=evals.filter(e=>e.status!=='excluded');
+  const g=inc.filter(e=>e.status==='graded'&&e.score!==''&&e.score!=null&&+e.max>0),p=inc.filter(e=>!g.includes(e));
+  const wE=g.reduce((a,e)=>a+ +e.weight,0),wP=p.reduce((a,e)=>a+ +e.weight,0);
+  let pts=g.reduce((a,e)=>a+(+e.score/+e.max)*(+e.weight/100)*S_,0);
+  const r={pts:g.length?pts:null,wE,wP,wT:wE+wP,n:g.length,warn:inc.length&&Math.abs(wE+wP-100)>0.01?`Las ponderaciones suman ${f1(wE+wP)}%, no 100%.`:null,min,goal,S:S_};
+  r.avg=wE>0?pts/(wE/100):null;
+  r.max=g.length||wP?pts+wP/100*S_:null;
+  r.need=wP>0?(min-pts)/(wP/100):null;r.needGoal=wP>0&&goal?(goal-pts)/(wP/100):null;
+  r.reach=r.need==null?null:r.need<=S_+1e-9;
+  r.proj=r.avg==null?null:pts+wP/100*r.avg;
+  r.margin=g.length?pts-min:null;
+  if(sim!=null)r.sim=pts+wP/100*sim*S_;
+  r.status=!g.length?'Sin datos':wP===0?(pts>=min?'Aprobada':'No aprobada'):r.reach===false?'Riesgo académico':r.need<=0?'Buen margen':r.need>.85*S_?'Riesgo académico':r.need>.7*S_?'Requiere atención':'En curso';
+  return r}
+function runTests(){const t=[],ok=(n,c)=>t.push([n,c]);
+  const s={scale:100,min:60},E=(w,sc,st='graded')=>({weight:w,score:sc,max:100,status:st});
+  let r=calc(s,[E(30,80),E(70,'','pending')]);
+  ok('80/100 con 30% evaluado = 24 puntos (no 80)',Math.abs(r.pts-24)<1e-9);ok('Necesaria en el 70% restante = 51.43',Math.abs(r.need-36/0.7)<1e-9);
+  r=calc(s,[E(30,0),E(70,'','pending')]);ok('Cero real ≠ pendiente: necesita 85.71',Math.abs(r.need-60/.7)<1e-9);ok('Máx alcanzable = 70',r.max===70);
+  r=calc(s,[E(100,50)]);ok('Peso pendiente 0 sin dividir (need null)',r.need===null&&r.status==='No aprobada');
+  r=calc(s,[E(40,10),E(60,'','pending')]);ok('No alcanzable detectado',r.reach===false);
+  r=calc(s,[E(50,100,'excluded'),E(50,80)]);ok('Excluida no cuenta',Math.abs(r.pts-40)<1e-9&&r.wE===50);
+  r=calc(s,[]);ok('Sin notas → Sin datos',r.status==='Sin datos'&&r.pts===null);
+  r=calc({scale:20,min:10},[{weight:50,score:15,max:20,status:'graded'},{weight:50,score:'',max:20,status:'pending'}]);ok('Escala 0-20 normalizada: 7.5 pts',Math.abs(r.pts-7.5)<1e-9);
+  r=calc(s,[E(50,80)]);ok('Advertencia si no suma 100%',!!r.warn);return t}
+
+/* ===== utilidades de datos ===== */
+const sem=()=>S.sems.find(x=>x.id===S.sem),subsOf=()=>S.subs.filter(x=>x.sem===S.sem),evOf=id=>S.evals.filter(e=>e.sub===id);
+const stCls=s=>({'Buen margen':'ok','Aprobada':'ok','En curso':'nt','Sin datos':'nt','Requiere atención':'am','Riesgo académico':'er','No aprobada':'er'}[s]||'nt');
+const nextEv=id=>evOf(id).filter(e=>e.status==='pending'&&e.date&&e.date>=today()).sort((a,b)=>a.date<b.date?-1:1)[0];
+const subName=id=>(S.subs.find(s=>s.id===id)||{}).name||'General';
+const allEvents=()=>[...S.events.map(e=>({...e,src:'evt'})),...S.evals.filter(e=>e.date&&e.status==='pending').map(e=>({id:e.id,title:e.name,subj:e.sub,date:e.date,type:'Evaluación',src:'eval',prio:'Alta'}))];
+const gAvg=()=>{const L=subsOf().map(s=>({s,c:calc(s,evOf(s.id))})).filter(x=>x.c.pts!=null&&x.c.avg!=null);if(!L.length)return null;
+  const nrm=x=>x.c.avg/x.c.S*100;if(S.cfg.avg==='credits'){const cr=L.filter(x=>+x.s.credits>0);if(cr.length){const t=cr.reduce((a,x)=>a+ +x.s.credits,0);return cr.reduce((a,x)=>a+nrm(x)*x.s.credits,0)/t}}
+  return L.reduce((a,x)=>a+nrm(x),0)/L.length};
+
+/* ===== UI base ===== */
+const root=document.getElementById('root');
+function modal(html){const m=document.createElement('div');m.className='mod';m.innerHTML=html;m.onclick=e=>{if(e.target===m)m.remove()};document.body.appendChild(m);return m}
+function form(title,fields,init,onOk){init=init||{};
+  const m=modal(`<form novalidate><h3>${title}</h3><br>${fields.map(f=>`<label>${f.l}${f.req?' *':''}${f.t==='select'?`<select name="${f.k}">${f.o.map(o=>`<option value="${esc(o[0]??o)}" ${(init[f.k]??f.d)==(o[0]??o)?'selected':''}>${esc(o[1]??o)}</option>`).join('')}</select>`:f.t==='textarea'?`<textarea name="${f.k}" rows="3">${esc(init[f.k]??'')}</textarea>`:`<input name="${f.k}" type="${f.t||'text'}" step="any" value="${esc(init[f.k]??f.d??'')}">`}<span class="em"></span></label>`).join('')}<div class="row"><button class="btn">Guardar</button><button type="button" class="btn g" id="cx">Cancelar</button></div></form>`);
+  m.querySelector('#cx').onclick=()=>m.remove();
+  m.querySelector('form').onsubmit=e=>{e.preventDefault();const fd=Object.fromEntries(new FormData(e.target));let bad=0;
+    fields.forEach(f=>{const l=e.target.elements[f.k].closest('label'),v=fd[f.k];let msg='';if(f.req&&!String(v).trim())msg='Campo obligatorio';else if(f.t==='number'&&v!==''&&isNaN(+v))msg='Número inválido';else if(f.min!=null&&v!==''&&+v<f.min)msg='Mínimo '+f.min;
+      l.classList.toggle('err',!!msg);l.querySelector('.em').textContent=msg;if(msg)bad=1});
+    if(bad)return;fields.forEach(f=>{if(f.t==='number'&&fd[f.k]!=='')fd[f.k]=+fd[f.k]});onOk(fd);m.remove();save();render()}}
+const confirmBox=(msg,fn)=>{const m=modal(`<div><p>${msg}</p><div class="row"><button class="btn" id="y">Confirmar</button><button class="btn g" id="n">Cancelar</button></div></div>`);m.querySelector('#n').onclick=()=>m.remove();m.querySelector('#y').onclick=()=>{m.remove();fn();save();render()}};
+const bump=(arr,o)=>{const i=arr.findIndex(x=>x.id===o.id);i<0?arr.push(o):arr[i]=o};
+
+/* ===== acciones ===== */
+const tpl=(k,fields,title,extra)=>(id)=>{const cur=id&&S[k].find(x=>x.id===id);form(title,fields,cur,d=>{const o=Object.assign({},cur||{id:uid(),created:new Date().toISOString()},d,extra?extra():{});o.modified=new Date().toISOString();bump(S[k],o);if(k==='sems'&&!S.sem)S.sem=o.id})};
+const semF=[{k:'name',l:'Nombre (ej. Semestre 4)',req:1},{k:'year',l:'Año académico',t:'number',req:1},{k:'start',l:'Inicio',t:'date'},{k:'end',l:'Fin',t:'date'},{k:'status',l:'Estado',t:'select',o:['planificado','activo','finalizado','archivado'],d:'activo'},{k:'goals',l:'Objetivos',t:'textarea'}];
+const addSem=tpl('sems',semF,'Semestre');
+const plats=['Moodle','Learning Site','Otra plataforma','Evaluación manual','Varias fuentes'];
+const subF=[{k:'name',l:'Nombre de la materia',req:1},{k:'code',l:'Código'},{k:'prof',l:'Profesor'},{k:'credits',l:'Créditos',t:'number',min:0},{k:'platform',l:'Plataforma de evaluación',t:'select',o:plats},{k:'scale',l:'Nota máxima de la escala',t:'number',d:100,req:1,min:1},{k:'min',l:'Nota mínima para aprobar',t:'number',d:60,req:1,min:0},{k:'goal',l:'Meta personal (opcional)',t:'number',min:0},{k:'desc',l:'Descripción',t:'textarea'}];
+const addSub=id=>{if(!S.sem)return alert('Primero crea un semestre.');tpl('subs',subF,'Materia',()=>({sem:S.sem}))(id)};
+const evF=[{k:'name',l:'Evaluación',req:1},{k:'comp',l:'Componente (Parcial I, Laboratorio…)'},{k:'weight',l:'Ponderación (% de la nota final)',t:'number',req:1,min:0},{k:'status',l:'Estado',t:'select',o:[['pending','Pendiente'],['graded','Calificada'],['excluded','Excluida del cálculo']],d:'pending'},{k:'score',l:'Nota obtenida (vacío si pendiente)',t:'number',min:0},{k:'max',l:'Puntos posibles',t:'number',d:100,req:1,min:.01},{k:'date',l:'Fecha de la evaluación',t:'date'},{k:'platform',l:'Plataforma de origen',t:'select',o:plats},{k:'week',l:'Semana',t:'number',min:1}];
+const addEv=(sub,id)=>tpl('evals',evF,'Evaluación',()=>({sub}))(id);
+const logF=()=>[{k:'sub',l:'Materia',t:'select',o:subsOf().map(s=>[s.id,s.name])},{k:'week',l:'Semana',t:'number',req:1,min:1},{k:'taught',l:'Temas impartidos',t:'textarea'},{k:'studied',l:'Temas estudiados',t:'textarea'},{k:'diff',l:'Dificultades / conceptos a reforzar',t:'textarea'},{k:'hours',l:'Horas de estudio',t:'number',min:0},{k:'goals',l:'Próximos objetivos',t:'textarea'},{k:'notes',l:'Observaciones',t:'textarea'}];
+const addLog=id=>{if(!subsOf().length)return alert('Añade una materia primero.');tpl('logs',logF(),'Registro semanal',()=>({sem:S.sem}))(id)};
+const evtF=()=>[{k:'title',l:'Título',req:1},{k:'subj',l:'Materia',t:'select',o:[['','General'],...subsOf().map(s=>[s.id,s.name])]},{k:'date',l:'Fecha',t:'date',req:1},{k:'time',l:'Hora',t:'time'},{k:'type',l:'Tipo',t:'select',o:['Examen','Quiz','Laboratorio','Entrega','Exposición','Práctica','Sesión de estudio','Tutoría','Administrativa','Otro']},{k:'prio',l:'Prioridad',t:'select',o:['Alta','Media','Baja'],d:'Media'}];
+const addEvt=id=>tpl('events',evtF(),'Evento',()=>({sem:S.sem}))(id);
+const taskF=()=>[{k:'title',l:'Tarea',req:1},{k:'subj',l:'Materia',t:'select',o:[['','General'],...subsOf().map(s=>[s.id,s.name])]},{k:'due',l:'Fecha límite',t:'date'},{k:'est',l:'Horas estimadas',t:'number',min:0,d:1},{k:'diff',l:'Dificultad (1-5)',t:'number',min:1,d:3},{k:'real',l:'Horas reales',t:'number',min:0}];
+const addTask=id=>tpl('tasks',taskF(),'Tarea',()=>({sem:S.sem}))(id);
+const topicF=sub=>[{k:'name',l:'Tema',req:1},{k:'st',l:'Estado',t:'select',o:['No iniciado','En estudio','Comprendido','Necesita repaso','Dominado']}];
+const addTopic=(sub,id)=>tpl('topics',topicF(),'Tema',()=>({sub}))(id);
+const del=(k,id)=>confirmBox('¿Eliminar este registro? No se puede deshacer.',()=>{S[k]=S[k].filter(x=>x.id!==id);if(k==='subs'){S.evals=S.evals.filter(e=>e.sub!==id)}});
+const toggle=(k,id)=>{const o=S[k].find(x=>x.id===id);o.done=!o.done;o.modified=new Date().toISOString();save();render()};
+const setSem=id=>{S.sem=id;save();render()};
+const closeSem=id=>confirmBox('Al cerrar el semestre se genera el resumen final y queda en el historial. Podrás consultarlo siempre.',()=>{const s=S.sems.find(x=>x.id===id);s.status='finalizado';s.summary=subsOf().map(u=>{const c=calc(u,evOf(u.id));return{name:u.name,final:c.pts,status:c.status}});s.closedAt=today()});
+const archSem=id=>{const s=S.sems.find(x=>x.id===id);s.status='archivado';save();render()};
+const showText=(t,txt)=>{const m=modal(`<div><h3>${t}</h3><p class="mut">Copia el contenido (la descarga directa no está disponible en esta vista).</p><textarea rows="12" readonly>${esc(txt)}</textarea><div class="row"><button class="btn g" id="c">Cerrar</button></div></div>`);m.querySelector('#c').onclick=()=>m.remove()};
+const expJSON=()=>showText('Exportar JSON',JSON.stringify(S,null,2));
+const expCSV=()=>showText('Exportar CSV',['semestre,materia,evaluacion,peso,nota,max,estado,plataforma,fecha',...S.evals.map(e=>{const u=S.subs.find(s=>s.id===e.sub)||{},m=S.sems.find(s=>s.id===u.sem)||{};return[m.name,u.name,e.name,e.weight,e.score,e.max,e.status,e.platform,e.date].map(v=>`"${String(v??'').replace(/"/g,'""')}"`).join(',')})].join('\n'));
+const resetAll=()=>confirmBox('Se borrarán TODOS los datos de MEDTRACK de este navegador.',()=>{S={...D,welcomed:true,sems:[],subs:[],evals:[],logs:[],events:[],tasks:[],topics:[]}});
+
+/* ===== gráficos SVG ===== */
+function bars(items,max){if(!items.length)return'<p class="mut">Sin datos suficientes todavía.</p>';
+  return`<svg viewBox="0 0 ${items.length*90+20} 190" width="100%" role="img" aria-label="Rendimiento por materia">${items.map((b,i)=>{const x=20+i*90,h=Math.max(2,b.v/max*130),y=150-h;return`<g><title>${esc(b.l)}: ${f1(b.v)} / ${f1(max)}</title><rect x="${x}" y="${y}" width="44" height="${h}" rx="4" fill="var(--w)"/>${b.g!=null?`<line x1="${x-6}" x2="${x+50}" y1="${150-b.g/max*130}" y2="${150-b.g/max*130}" stroke="var(--am)" stroke-width="2" stroke-dasharray="4"/>`:''}<text x="${x+22}" y="${y-5}" text-anchor="middle" font-size="11" fill="currentColor">${f1(b.v)}</text><text x="${x+22}" y="168" text-anchor="middle" font-size="10" fill="currentColor">${esc(b.l.slice(0,11))}</text></g>`}).join('')}</svg>`}
+function line(pts){if(pts.length<2)return'<p class="mut">Se necesitan al menos 2 evaluaciones calificadas con fecha.</p>';
+  const W=560,x=i=>30+i*(W-50)/(pts.length-1),y=v=>150-v*1.3;
+  return`<svg viewBox="0 0 ${W} 180" width="100%" role="img" aria-label="Evolución de calificaciones (%)"><path d="M30 20V150H${W-10}" stroke="var(--bd)" fill="none"/><polyline fill="none" stroke="var(--w)" stroke-width="2" points="${pts.map((p,i)=>x(i)+','+y(p.v)).join(' ')}"/>${pts.map((p,i)=>`<circle cx="${x(i)}" cy="${y(p.v)}" r="4" fill="var(--w)"><title>${esc(p.l)} (${p.d}): ${f1(p.v)}%</title></circle>`).join('')}<text x="4" y="24" font-size="10" fill="currentColor">100%</text><text x="10" y="150" font-size="10" fill="currentColor">0</text></svg>`}
+
+/* ===== vistas ===== */
+const pill=s=>`<span class="tag ${stCls(s)}">${s}</span>`;
+function subCard(s){const c=calc(s,evOf(s.id)),n=nextEv(s.id);
+  return`<div class="card"><div class="row sp"><div><h3>${esc(s.name)}</h3><span class="mut">${[s.code,s.prof,s.credits?s.credits+' cr.':'',s.platform].filter(Boolean).map(esc).join(' · ')}</span></div>${pill(c.status)}</div>
+  ${c.n?`<div class="grid" style="margin:8px 0"><div><span class="mut">Acumulado</span><br><b>${f1(c.pts)}</b> / ${c.S}</div><div><span class="mut">Promedio evaluado</span><br><b>${f1(c.avg)}</b></div><div><span class="mut">Evaluado / pendiente</span><br><b>${f1(c.wE)}%</b> / ${f1(c.wP)}%</div><div><span class="mut">Necesitas (mín. ${c.min})</span><br><b>${c.need==null?'—':c.need<=0?'ya alcanzada':c.reach?f1(c.need):'inalcanzable'}</b></div></div><div class="bar"><i style="width:${Math.min(100,c.wE)}%"></i></div>`:'<p class="mut">Sin calificaciones registradas</p>'}
+  ${c.warn?`<p class="am em">⚠ ${c.warn}</p>`:''}<div class="row sp"><span class="mut">${n?'Próxima: '+esc(n.name)+' · '+n.date:'Sin próxima evaluación fechada'}</span><button class="btn s" onclick="go('sub/${s.id}')">Abrir</button></div></div>`}
+function vDash(){const L=subsOf(),cs=L.map(s=>({s,c:calc(s,evOf(s.id))})),att=cs.filter(x=>['Requiere atención','Riesgo académico'].includes(x.c.status)),pend=S.evals.filter(e=>L.some(s=>s.id===e.sub)&&e.status==='pending').length,
+  up=allEvents().filter(e=>e.date>=today()&&(!e.subj||L.some(s=>s.id===e.subj))).sort((a,b)=>a.date<b.date?-1:1),ga=gAvg();
+  const prog=L.length?cs.reduce((a,x)=>a+Math.min(100,x.c.wE),0)/L.length:null;
+  const phrase=!sem()?'Aún no has creado un semestre.':!L.length?'Este semestre no tiene materias todavía.':att.length?`${att.length} materia(s) requieren atención: ${att.map(x=>esc(x.s.name)).join(', ')}.`:up.length?`Próximo evento: ${esc(up[0].title)} el ${up[0].date}.`:'Sin materias en riesgo con los datos actuales.';
+  return`<div class="row sp"><div><h2>Bienvenido de nuevo, Jp</h2><p class="mut">${phrase}</p></div><select aria-label="Semestre activo" style="width:auto" onchange="setSem(this.value)">${S.sems.map(s=>`<option value="${s.id}" ${s.id===S.sem?'selected':''}>${esc(s.name)} · ${s.year}</option>`).join('')||'<option>Sin semestres</option>'}</select></div>
+  <div class="row"><button class="btn s" onclick="addSem()">Añadir semestre</button><button class="btn s" onclick="addSub()">Añadir materia</button><button class="btn s" onclick="go('evals')">Registrar calificación</button><button class="btn s" onclick="addLog()">Registrar actividad semanal</button><button class="btn s" onclick="addEvt()">Crear evento</button></div>
+  <div class="grid"><div class="card kpi"><span>Materias activas</span><b>${L.length}</b></div><div class="card kpi"><span>Promedio (${S.cfg.avg==='credits'?'ponderado por créditos':'simple'}, base 100)</span><b>${ga==null?'—':f1(ga)}</b></div><div class="card kpi"><span>Evaluaciones pendientes</span><b>${pend}</b></div><div class="card kpi"><span>Próximos eventos</span><b>${up.length}</b></div><div class="card kpi"><span>Requieren atención</span><b class="${att.length?'er':''}">${att.length}</b></div><div class="card kpi"><span>Ponderación evaluada</span><b>${prog==null?'—':f1(prog)+'%'}</b></div></div>
+  ${L.length?`<div class="card"><h3>Rendimiento por materia</h3><p class="mut">Nota acumulada (barra) frente a meta personal (línea). Datos registrados.</p>${bars(cs.filter(x=>x.c.pts!=null).map(x=>({l:x.s.name,v:x.c.pts,g:x.s.goal||null})),Math.max(...cs.map(x=>x.c.S)))}</div>`:''}
+  ${L.map(subCard).join('')||'<div class="card"><p>Empieza creando un semestre y tus materias.</p></div>'}
+  <div class="card"><h3>Próximos eventos</h3>${up.slice(0,6).map(e=>`<div class="row sp"><span>${esc(e.title)} <span class="mut">· ${esc(subName(e.subj))}</span></span><span class="mut">${e.date}</span></div>`).join('')||'<p class="mut">No hay eventos próximos.</p>'}</div>`}
+function vSems(){return`<div class="row sp"><h2>Semestres</h2><button class="btn" onclick="addSem()">Nuevo semestre</button></div>${S.sems.map(s=>`<div class="card"><div class="row sp"><div><h3>${esc(s.name)} · ${s.year}</h3><span class="mut">${s.start||'?'} → ${s.end||'?'} · ${S.subs.filter(u=>u.sem===s.id).length} materias</span></div><span class="tag nt">${s.status}${s.id===S.sem?' · seleccionado':''}</span></div>${s.goals?`<p>${esc(s.goals)}</p>`:''}<div class="row"><button class="btn s" onclick="setSem('${s.id}')">Usar como activo</button><button class="btn g s" onclick="addSem('${s.id}')">Editar</button>${s.status!=='finalizado'&&s.status!=='archivado'?`<button class="btn g s" onclick="closeSem('${s.id}')">Cerrar semestre</button>`:''}<button class="btn g s" onclick="archSem('${s.id}')">Archivar</button><button class="btn g s" onclick="del('sems','${s.id}')">Eliminar</button></div></div>`).join('')||'<div class="card"><p>No hay semestres. Crea el primero con tus propios datos.</p></div>'}`}
+function vSubs(){return`<div class="row sp"><h2>Materias · ${esc(sem()?.name||'')}</h2><button class="btn" onclick="addSub()">Nueva materia</button></div>${subsOf().map(subCard).join('')||'<div class="card"><p>Sin materias en este semestre.</p></div>'}`}
+let tab='Resumen',simV=70;
+function vSub(id){const s=S.subs.find(x=>x.id===id);if(!s)return'<p>Materia no encontrada.</p>';const ev=evOf(id),c=calc(s,ev),tp=S.topics.filter(t=>t.sub===id);
+  const T=['Resumen','Evaluaciones','Simulador','Temas','Registro semanal'];
+  let b='';
+  if(tab==='Resumen')b=`<div class="grid"><div class="card kpi"><span>Puntos acumulados</span><b>${f1(c.pts)}</b></div><div class="card kpi"><span>Promedio evaluado</span><b>${f1(c.avg)}</b></div><div class="card kpi"><span>Pendiente</span><b>${f1(c.wP)}%</b></div><div class="card kpi"><span>Margen vs mínimo</span><b>${f1(c.margin)}</b></div><div class="card kpi"><span>Proyectada</span><b>${f1(c.proj)}</b></div><div class="card kpi"><span>Máx. alcanzable</span><b>${f1(c.max)}</b></div></div><div class="card">${c.n?`<p>Necesitas ${c.need==null?'—':c.need<=0?'nada más: la nota mínima ya está alcanzada (revisa requisitos obligatorios aparte)':c.reach?f1(c.need)+' de promedio en lo pendiente para llegar a '+c.min:'más de la nota máxima: no es alcanzable con la configuración actual'}.</p>${c.needGoal!=null?`<p>Para tu meta (${c.goal}): ${c.needGoal<=0?'ya alcanzada':c.needGoal<=c.S?f1(c.needGoal):'no alcanzable'}.</p>`:''}`:'<p class="mut">Sin calificaciones registradas</p>'}${c.warn?`<p class="am">⚠ ${c.warn}</p>`:''}<button class="btn g s" onclick="addSub('${id}')">Editar materia</button> <button class="btn g s" onclick="del('subs','${id}');go('subs')">Eliminar</button></div>`;
+  if(tab==='Evaluaciones')b=`<div class="row"><button class="btn" onclick="addEv('${id}')">Añadir evaluación</button></div><div class="card sc"><table><tr><th>Evaluación</th><th>Peso</th><th>Nota</th><th>Estado</th><th>Fecha</th><th>Plataforma</th><th></th></tr>${ev.map(e=>`<tr><td>${esc(e.name)}<br><span class="mut">${esc(e.comp||'')}</span></td><td>${e.weight}%</td><td>${e.status==='graded'?e.score+'/'+e.max:'—'}</td><td>${{pending:'Pendiente',graded:'Calificada',excluded:'Excluida'}[e.status]}</td><td>${e.date||'—'}</td><td>${esc(e.platform||'')}</td><td><button class="btn g s" onclick="addEv('${id}','${e.id}')">Editar</button> <button class="btn g s" onclick="del('evals','${e.id}')">×</button></td></tr>`).join('')||'<tr><td colspan="7" class="mut">Sin evaluaciones. Registra manualmente lo publicado en tu plataforma.</td></tr>'}</table></div>`;
+  if(tab==='Simulador'){const r=calc(s,ev,simV/100);b=`<div class="card sim"><h3>Simulador · proyección hipotética</h3><p class="mut">No modifica tus notas reales.</p><label>Promedio hipotético en evaluaciones pendientes: <b>${simV}%</b><input type="range" min="0" max="100" value="${simV}" oninput="simV=+this.value;render()"></label>${r.wP>0?`<p>Con ${simV}% en el ${f1(r.wP)}% pendiente, terminarías con <b>${f1(r.sim)}</b> / ${r.S} — ${r.sim>=r.min?'<span class="ok">aprobarías</span>':'<span class="er">no alcanzarías el mínimo ('+r.min+')</span>'}.</p><p class="mut">Mejor resultado posible: ${f1(r.max)} · Real hasta hoy: ${f1(r.pts)}</p>`:'<p>No hay peso pendiente que simular.</p>'}</div>`}
+  if(tab==='Temas')b=`<div class="row"><button class="btn" onclick="addTopic('${id}')">Añadir tema</button></div>${tp.map(t=>`<div class="card row sp"><span>${esc(t.name)}</span><span><span class="tag ${t.st==='Necesita repaso'?'am':t.st==='Dominado'?'ok':'nt'}">${t.st}</span> <button class="btn g s" onclick="addTopic('${id}','${t.id}')">Editar</button> <button class="btn g s" onclick="del('topics','${t.id}')">×</button></span></div>`).join('')||'<p class="mut">Sin temas registrados.</p>'}`;
+  if(tab==='Registro semanal')b=logList(S.logs.filter(l=>l.sub===id));
+  return`<p><a href="#/subs">← Materias</a></p><div class="row sp"><h2>${esc(s.name)}</h2>${pill(c.status)}</div><div class="tabs">${T.map(t=>`<button class="${t===tab?'on':''}" onclick="tab='${t}';render()">${t}</button>`).join('')}</div>${b}`}
+const logList=L=>L.sort((a,b)=>b.week-a.week||(b.created>a.created?1:-1)).map(l=>`<div class="card"><div class="row sp"><h3>Semana ${l.week} · ${esc(subName(l.sub))}</h3><span class="mut">${l.hours?l.hours+' h · ':''}creado ${l.created.slice(0,10)}${l.modified!==l.created?' · editado '+l.modified.slice(0,10):''}</span></div>${[['Impartido',l.taught],['Estudiado',l.studied],['Dificultades',l.diff],['Objetivos',l.goals],['Notas',l.notes]].filter(x=>x[1]).map(x=>`<p><b>${x[0]}:</b> ${esc(x[1])}</p>`).join('')}<button class="btn g s" onclick="addLog('${l.id}')">Editar</button> <button class="btn g s" onclick="del('logs','${l.id}')">Eliminar</button></div>`).join('')||'<p class="mut">Sin registros.</p>';
+let lf='';
+function vWeek(){return`<div class="row sp"><h2>Registro semanal</h2><button class="btn" onclick="addLog()">Nuevo registro</button></div><div class="row"><select style="width:auto" onchange="lf=this.value;render()"><option value="">Todas las materias</option>${subsOf().map(s=>`<option value="${s.id}" ${lf===s.id?'selected':''}>${esc(s.name)}</option>`).join('')}</select></div>${logList(S.logs.filter(l=>l.sem===S.sem&&(!lf||l.sub===lf)))}`}
+let cv='Mes',cm=new Date();
+function vCal(){const ev=allEvents().filter(e=>!e.sem||e.sem===S.sem||true),y=cm.getFullYear(),m=cm.getMonth(),first=new Date(y,m,1).getDay(),dn=new Date(y,m+1,0).getDate();
+  const list=ev.sort((a,b)=>a.date<b.date?-1:1);let body='';
+  if(cv==='Mes'){const c=[...'DLMXJVS'].map(d=>`<div class="hd">${d}</div>`);for(let i=0;i<first;i++)c.push('<div style="border:0"></div>');for(let d=1;d<=dn;d++){const ds=`${y}-${String(m+1).padStart(2,'0')}-${String(d).padStart(2,'0')}`;c.push(`<div ${ds===today()?'style="border-color:var(--w)"':''}>${d}${list.filter(e=>e.date===ds).map(e=>`<span title="${esc(e.title)}">${esc(e.title)}</span>`).join('')}</div>`)}body=`<div class="row sp"><button class="btn g s" onclick="cm=new Date(${y},${m-1},1);render()">←</button><b>${cm.toLocaleDateString('es',{month:'long',year:'numeric'})}</b><button class="btn g s" onclick="cm=new Date(${y},${m+1},1);render()">→</button></div><div class="cal">${c.join('')}</div>`}
+  else body=list.filter(e=>cv==='Agenda'||e.date===today()).map(e=>`<div class="card row sp"><span><b ${e.done?'style="text-decoration:line-through"':''}>${esc(e.title)}</b> <span class="mut">· ${e.type} · ${esc(subName(e.subj))} · ${e.date} ${e.time||''}</span></span>${e.src==='evt'?`<span><button class="btn g s" onclick="toggle('events','${e.id}')">${e.done?'Reabrir':'Completar'}</button> <button class="btn g s" onclick="addEvt('${e.id}')">Editar</button> <button class="btn g s" onclick="del('events','${e.id}')">×</button></span>`:'<span class="tag nt">desde evaluaciones</span>'}</div>`).join('')||'<p class="mut">Sin eventos.</p>';
+  return`<div class="row sp"><h2>Calendario</h2><button class="btn" onclick="addEvt()">Nuevo evento</button></div><div class="tabs">${['Mes','Hoy','Agenda'].map(t=>`<button class="${t===cv?'on':''}" onclick="cv='${t}';render()">${t}</button>`).join('')}</div>${body}<p class="mut">Las evaluaciones pendientes con fecha aparecen aquí automáticamente. Los recordatorios del sistema aún no están integrados.</p>`}
+function vEvals(){const L=subsOf();return`<h2>Evaluaciones y calificaciones</h2><p class="mut">Registro manual de las notas publicadas en Moodle, Learning Site u otras fuentes. MEDTRACK no se conecta a esas plataformas ni pide contraseñas.</p>${L.map(s=>{const c=calc(s,evOf(s.id));return`<div class="card"><div class="row sp"><h3>${esc(s.name)}</h3><span>${pill(c.status)} <button class="btn s" onclick="addEv('${s.id}')">Añadir nota</button> <button class="btn g s" onclick="go('sub/${s.id}')">Detalle</button></span></div>${evOf(s.id).map(e=>`<div class="row sp"><span>${esc(e.name)} <span class="mut">${e.weight}% · ${esc(e.platform||'')}</span></span><b>${e.status==='graded'?e.score+'/'+e.max:'—'}</b></div>`).join('')||'<span class="mut">Sin evaluaciones</span>'}</div>`}).join('')||'<div class="card">Añade materias primero.</div>'}`}
+function prio(t){const why=[];let sc=0;if(t.due){const d=Math.ceil((new Date(t.due)-new Date(today()))/864e5);if(d<=1){sc+=4;why.push('vence en ≤1 día')}else if(d<=3){sc+=3;why.push('vence en '+d+' días')}else if(d<=7){sc+=2;why.push('vence en '+d+' días')}else sc+=1;if(d<0){sc+=1;why.push('vencida')}}else why.push('sin fecha límite');
+  const u=S.subs.find(x=>x.id===t.subj);if(u){const st=calc(u,evOf(u.id)).status;if(st==='Riesgo académico'){sc+=3;why.push('materia en riesgo')}else if(st==='Requiere atención'){sc+=2;why.push('materia requiere atención')}}
+  if(t.diff>=4){sc+=1;why.push('dificultad declarada '+t.diff+'/5')}if(t.est>=3){sc+=1;why.push('requiere '+t.est+' h')}return{sc,why:why.join(', ')}}
+function vPlan(){const T=S.tasks.filter(t=>!t.done).map(t=>({t,p:prio(t)})).sort((a,b)=>b.p.sc-a.p.sc),wk=T.filter(x=>x.t.due&&x.t.due<=new Date(Date.now()+7*864e5).toISOString().slice(0,10)).reduce((a,x)=>a+(+x.t.est||0),0),av=S.cfg.hours*7;
+  return`<div class="row sp"><h2>Planificador de estudio</h2><button class="btn" onclick="addTask()">Nueva tarea</button></div><div class="card"><p>Horas estimadas con vencimiento en 7 días: <b>${wk}</b> · disponibles: <b>${av}</b> (${S.cfg.hours} h/día, configurable)</p>${wk>av?'<p class="er">⚠ La carga supera tu tiempo disponible: reprograma o reduce tareas.</p>':''}</div>${T.map(x=>`<div class="card"><div class="row sp"><b>${esc(x.t.title)}</b><span class="tag ${x.p.sc>=5?'er':x.p.sc>=3?'am':'nt'}">prioridad ${x.p.sc>=5?'alta':x.p.sc>=3?'media':'baja'}</span></div><span class="mut">${esc(subName(x.t.subj))} · ${x.t.due||'sin fecha'} · ${x.t.est||0} h</span><p class="mut">Por qué: ${x.p.why}.</p><button class="btn g s" onclick="toggle('tasks','${x.t.id}')">Completar</button> <button class="btn g s" onclick="addTask('${x.t.id}')">Editar / reprogramar</button> <button class="btn g s" onclick="del('tasks','${x.t.id}')">×</button></div>`).join('')||'<p class="mut">Sin tareas pendientes.</p>'}<p class="mut">Completadas: ${S.tasks.filter(t=>t.done).length} de ${S.tasks.length}</p>`}
+function vStats(){const L=subsOf(),pts=S.evals.filter(e=>e.status==='graded'&&e.date&&L.some(s=>s.id===e.sub)&&+e.max>0).sort((a,b)=>a.date<b.date?-1:1).map(e=>({v:e.score/e.max*100,l:subName(e.sub)+' · '+e.name,d:e.date})),hrs={};S.logs.filter(l=>l.sem===S.sem&&l.hours).forEach(l=>hrs[l.week]=(hrs[l.week]||0)+ +l.hours);const hk=Object.keys(hrs).sort((a,b)=>a-b),tp=S.topics.filter(t=>L.some(s=>s.id===t.sub));
+  return`<h2>Estadísticas</h2><div class="card"><h3>Evolución de calificaciones (% de cada evaluación)</h3><p class="mut">Datos registrados; solo evaluaciones con fecha.</p>${line(pts)}</div><div class="card"><h3>Horas de estudio por semana</h3>${hk.length?bars(hk.map(k=>({l:'Sem '+k,v:hrs[k]})),Math.max(...hk.map(k=>hrs[k]))):'<p class="mut">Registra horas en el registro semanal.</p>'}</div><div class="card"><h3>Temas</h3>${tp.length?['No iniciado','En estudio','Comprendido','Necesita repaso','Dominado'].map(s=>`<div class="row sp"><span>${s}</span><b>${tp.filter(t=>t.st===s).length}</b></div>`).join(''):'<p class="mut">Sin temas registrados.</p>'}</div><p class="mut">Las asociaciones entre horas y notas son descriptivas: no implican causalidad.</p>`}
+function vHist(){return`<div class="row sp"><h2>Historial académico</h2><span><button class="btn g s" onclick="expJSON()">Exportar JSON</button> <button class="btn g s" onclick="expCSV()">Exportar CSV</button> <button class="btn g s" onclick="print()">Imprimir informe</button></span></div><p class="mut">Informe generado el ${today()}. Las proyecciones son personales y no oficiales.</p>${S.sems.map(m=>{const U=S.subs.filter(u=>u.sem===m.id);return`<div class="card"><h3>${esc(m.name)} · ${m.year} <span class="tag nt">${m.status}</span></h3>${U.map(u=>{const c=calc(u,evOf(u.id));return`<div class="row sp"><span>${esc(u.name)}</span><span>${c.pts==null?'—':f1(c.pts)+' / '+c.S} ${pill(c.status)}</span></div>`}).join('')||'<span class="mut">Sin materias</span>'}</div>`}).join('')||'<p class="mut">Aún no hay semestres.</p>'}`}
+function vAI(){const L=subsOf().map(s=>({s,c:calc(s,evOf(s.id))})),r=L.filter(x=>x.c.status==='Riesgo académico'),a=L.filter(x=>x.c.status==='Requiere atención'),up=allEvents().filter(e=>e.date>=today()).sort((a,b)=>a.date<b.date?-1:1).slice(0,3),rep=S.topics.filter(t=>t.st==='Necesita repaso');
+  return`<h2>Asesor académico</h2><div class="card"><p><b>Resumen automático</b> <span class="tag nt">reglas locales, sin IA externa</span></p><ul><li>Riesgo académico: ${r.map(x=>esc(x.s.name)).join(', ')||'ninguna'}.</li><li>Requieren atención: ${a.map(x=>esc(x.s.name)).join(', ')||'ninguna'}.</li>${L.filter(x=>x.c.need>0&&x.c.reach).map(x=>`<li>${esc(x.s.name)}: necesitas ${f1(x.c.need)} de promedio en lo pendiente.</li>`).join('')}<li>Próximas fechas: ${up.map(e=>esc(e.title)+' ('+e.date+')').join('; ')||'ninguna'}.</li><li>Temas por repasar: ${rep.length?rep.map(t=>esc(t.name)).join(', '):'ninguno marcado'}.</li></ul></div><div class="card"><p class="mut">Pendiente de integrar: un asistente conversacional con IA. Las cifras siempre salen del motor de cálculo, nunca de una estimación del modelo.</p></div>`}
+function vCfg(){const t=runTests();return`<h2>Configuración</h2><div class="card"><label>Promedio global<select onchange="S.cfg.avg=this.value;save();render()"><option value="credits" ${S.cfg.avg==='credits'?'selected':''}>Ponderado por créditos</option><option value="simple" ${S.cfg.avg==='simple'?'selected':''}>Simple por materias</option></select></label><label>Horas de estudio disponibles por día<input type="number" min="0" value="${S.cfg.hours}" onchange="S.cfg.hours=+this.value;save();render()"></label><button class="btn g" onclick="S.welcomed=false;save();render()">Ver pantalla de bienvenida</button> <button class="btn g" onclick="resetAll()">Borrar todos los datos</button></div><div class="card"><h3>Pruebas del motor de cálculo</h3>${t.map(x=>`<div class="${x[1]?'ok':'er'}">${x[1]?'✓':'✗'} ${x[0]}</div>`).join('')}</div>`}
+const NAV=[['dash','Inicio','home',vDash],['sems','Semestres','lay',vSems],['subs','Materias','book',vSubs],['week','Registro semanal','pen',vWeek],['cal','Calendario','cal',vCal],['evals','Evaluaciones','chk',vEvals],['plan','Planificador','list',vPlan],['stats','Estadísticas','chart',vStats],['hist','Historial','arch',vHist],['ai','Asesor','bot',vAI],['cfg','Configuración','gear',vCfg]];
+const go=h=>{location.hash='/'+h};
+function render(){if(!S.welcomed){root.innerHTML=`<div class="wel"><h1>Bienvenido, Jp.</h1><h3 style="font-weight:400;margin:10px 0">Tu semestre, bajo control.</h3><p>Organiza tus materias, registra cada evaluación y convierte tus objetivos académicos en un plan concreto.</p><div class="row"><button class="btn" id="e">Entrar a mi centro académico</button><button class="btn g" id="c">Configurar mi primer semestre</button></div></div>`;
+    const en=f=>{S.welcomed=true;save();go('dash');render();f&&f()};e.onclick=()=>en();c.onclick=()=>en(()=>addSem());return}
+  const h=(location.hash||'#/dash').slice(2),[r,arg]=h.split('/'),cur=NAV.find(n=>n[0]===r),view=r==='sub'?vSub(arg):cur?cur[3]():vDash();
+  root.innerHTML=`<div class="app"><nav aria-label="Principal"><div class="logo">MEDTRACK</div><small>Centro de Control Académico</small>${NAV.map(n=>`<a href="#/${n[0]}" class="${n[0]===r||(r==='sub'&&n[0]==='subs')?'on':''}">${ic(n[2])}${n[1]}</a>`).join('')}</nav><main>${view}</main></div>`}
+addEventListener('hashchange',()=>{tab='Resumen';render()});render();
+</script></body></html>
